@@ -2,4 +2,5 @@
 /package-lock.json
 /.env
 /.development.env
+/.idea
 /.production.env
