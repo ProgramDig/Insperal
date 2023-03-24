@@ -4,3 +4,4 @@
 /.development.env
 /.idea
 /.production.env
+/dist
