@@ -7,10 +7,13 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from "./roles/roles.model";
 import { UserRoles } from "./roles/user-roles.model";
 import { AuthModule } from './auth/auth.module';
+import { WomenAccountingService } from './women-accounting/women-accounting.service';
+import { WomenAccountingController } from './women-accounting/women-accounting.controller';
+import { WomenAccountingModule } from './women-accounting/women-accounting.module';
 
 @Module({
-  controllers: [],
-  providers: [],
+  controllers: [WomenAccountingController],
+  providers: [WomenAccountingService],
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`
@@ -27,7 +30,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     RolesModule,
-    AuthModule
+    AuthModule,
+    WomenAccountingModule
   ]
 })
 export class AppModule {
