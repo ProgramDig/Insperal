@@ -7,13 +7,12 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from "./roles/roles.model";
 import { UserRoles } from "./roles/user-roles.model";
 import { AuthModule } from './auth/auth.module';
-import { WomenAccountingService } from './women-accounting/women-accounting.service';
-import { WomenAccountingController } from './women-accounting/women-accounting.controller';
 import { WomenAccountingModule } from './women-accounting/women-accounting.module';
+import { WomenAccounting } from "./women-accounting/women-accounting.model";
 
 @Module({
-  controllers: [WomenAccountingController],
-  providers: [WomenAccountingService],
+  controllers: [],
+  providers: [],
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`
@@ -25,7 +24,12 @@ import { WomenAccountingModule } from './women-accounting/women-accounting.modul
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles],
+      models: [
+        User,
+        Role,
+        UserRoles,
+        // WomenAccounting
+      ],
       autoLoadModels: true
     }),
     UsersModule,

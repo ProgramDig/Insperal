@@ -14,6 +14,5 @@ export class CreateUserDto {
 
   @ApiProperty({ example: "D@3274he38nk3OQ", description: "Пароль користувача" })
   @IsString({ message: "Пошта повинна бути строчкою" })
-
   readonly password: string;
 }
