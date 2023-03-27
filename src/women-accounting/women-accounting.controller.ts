@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
-import { CreateWADto } from "./dto/Create-WA.dto";
+import { Body, Controller, Delete, Get, Patch, Post } from "@nestjs/common";
+import { CreateWADto } from "./dto/create-WA.dto";
 import { WomenAccountingService } from "./women-accounting.service";
+import { UpdateWADto } from "./dto/update-WA.dto";
+import { DeleteWADto } from "./dto/delete-WA.dto";
 
 @Controller("women-accounting")
 export class WomenAccountingController {
@@ -8,12 +10,26 @@ export class WomenAccountingController {
   constructor(private womenAccountingService: WomenAccountingService) {
   }
 
-  @Post()
+  @Post("/create")
   createEntity(@Body() dto: CreateWADto){
     return this.womenAccountingService.create(dto)
   }
 
-  @Get()
+  @Patch("/update")
+  updateEntity(@Body() dto: UpdateWADto){
+    return this.womenAccountingService.update(dto)
+  }
+
+  @Delete("/delete")
+  deleteEntity(@Body() dto: DeleteWADto){
+    return this.womenAccountingService.delete(dto)
+  }
+  @Get("/:id")
+  getOneEntity(){
+    return this.womenAccountingService.getOne();
+  }
+
+  @Get("/")
   getAllEntities(){
     return this.womenAccountingService.getAll()
   }
