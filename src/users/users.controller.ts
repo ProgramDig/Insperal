@@ -8,6 +8,7 @@ import { RolesGuard } from "../auth/roles.guard";
 import { AddRoleDto } from "./dto/add-role.dto";
 import { BanUserDto } from "./dto/ban-user.dto";
 import { ValidationPipes } from "../pipes/validation.pipes";
+import { RoleEnum } from "../roles/enums/role.enum";
 
 @ApiTags("Користувачі")
 @Controller("users")
@@ -26,7 +27,7 @@ export class UsersController {
 
   @ApiOperation({ summary: "Отримання всіх користувачів" })
   @ApiResponse({ status: 200, type: [User] })
-  @Roles("ADMIN")
+  @Roles(RoleEnum.ADMIN)
   @UseGuards(RolesGuard)
   // @UseGuards(JwtAuthGuard)
   @Get()
@@ -36,7 +37,7 @@ export class UsersController {
 
   @ApiOperation({ summary: "Додавання ролі" })
   @ApiResponse({ status: 200 })
-  @Roles("ADMIN")
+  @Roles(RoleEnum.ADMIN)
   @UseGuards(RolesGuard)
   @Post("/role")
   addRole(@Body() dto: AddRoleDto) {
@@ -45,7 +46,7 @@ export class UsersController {
 
   @ApiOperation({ summary: "Забанити користувача" })
   @ApiResponse({ status: 200 })
-  @Roles("ADMIN")
+  @Roles(RoleEnum.ADMIN)
   @UseGuards(RolesGuard)
   @Post("/ban")
   banUser(@Body() dto: BanUserDto) {
