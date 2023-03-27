@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import { CreateWADto } from "./dto/create-WA.dto";
 import { WomenAccountingService } from "./women-accounting.service";
 import { UpdateWADto } from "./dto/update-WA.dto";
@@ -45,11 +45,11 @@ export class WomenAccountingController {
 
   @ApiOperation({ summary: "Отримання поточного запису особи обліку" })
   @ApiResponse({ status: 200, type: DeleteWADto })
-  @Roles(RoleEnum.ADMIN)
-  @UseGuards(RolesGuard)
+  // @Roles(RoleEnum.ADMIN)
+  // @UseGuards(RolesGuard)
   @Get("/:id")
-  getOneEntity() {
-    return this.womenAccountingService.getOne();
+  getOneEntity(@Param("id") id: number) {
+    return this.womenAccountingService.getOne(id);
   }
 
   @ApiOperation({ summary: "Отримання всіх записів особи обліку" })

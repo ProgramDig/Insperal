@@ -37,10 +37,9 @@ export class WomenAccountingService {
     return res > 0? {message: `Запис з id ${dto.id} видалено`} : {message: `Запис не видалено`};
   }
 
-  async getOne() {
-    const id: string = this.request.params.id;
+  async getOne(id: number) {
     const women = await this.womenAccountRepository.findByPk(id);
-    if (women) {
+    if (!women) {
       throw new HttpException("Такого запису не існує", HttpStatus.BAD_REQUEST);
     }
     return women;
