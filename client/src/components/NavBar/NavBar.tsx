@@ -1,65 +1,52 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import logo from "../../assets/box-fill-white.svg";
 import user from "../../assets/person-circle.svg";
 import exit from "../../assets/box-arrow-right.svg";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { AuthContext } from "../../context/auth.context";
 import { RoleEnum } from "../../enums/role.enum";
 import useAppSelector from "../../hooks/useAppSelector.hook";
+import classes from "./NavBar.module.scss";
 
 const NavBar: React.FC = (): JSX.Element => {
   const auth = useContext(AuthContext);
   const role = useAppSelector(state => state.role.value);
 
   const logoutHandler: React.MouseEventHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // @ts-ignore
-    auth.logout()
+    if (auth.logout) {
+      auth.logout();
+    }
   };
 
   return (
     <>
-      <Navbar bg="primary" variant="dark">
+      <Navbar bg="primary" variant="dark" className={classes.block}>
         <Container>
           <Navbar.Brand>
-            <Nav.Link>
-              <NavLink className="nav-link" to={"/home"}>
-                Insperal <img src={logo} alt="logo" />
-              </NavLink>
-            </Nav.Link>
-
+            <Link className="nav-link" to={"/home"}>
+              Insperal <img src={logo} alt="logo" />
+            </Link>
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link>
-              <NavLink className="nav-link" to={"/home"}>Головна</NavLink>
-            </Nav.Link>
-            <Nav.Link>
-              <NavLink className="nav-link" to={"/table"}>Таблиця</NavLink>
-            </Nav.Link>
+            <Link className="nav-link" to={"/home"}>
+              Головна
+            </Link>
+            <Link className="nav-link" to={"/table"}>Таблиця</Link>
             {role === RoleEnum.ADMIN &&
-              <Nav.Link>
-                <NavLink className="nav-link" to={"/admin"}>Адмін панель</NavLink>
-              </Nav.Link>
+              <Link className="nav-link" to={"/admin"}>Адмін панель</Link>
             }
-            <Nav.Link>
-              <NavLink className="nav-link" to={"/api"}>Апі</NavLink>
-            </Nav.Link>
-            <Nav.Link href="/docs">
-              <NavLink className="nav-link" to={"/docs"}>Документація</NavLink>
-            </Nav.Link>
+            <Link className="nav-link" to={"/api"}>Апі</Link>
+            <Link className="nav-link" to={"/docs"}>Документація</Link>
           </Nav>
           <Nav>
-            <Nav.Link href="/account">
-              <NavLink className="nav-link" to={"/account"}>
-                <img src={user} alt="user" />
-              </NavLink>
-            </Nav.Link>
-            <Nav.Link href="/login">
-              <NavLink className="nav-link" to={"/login"} onClick={logoutHandler}>
-                <img src={exit} alt="exit" />
-              </NavLink>
-            </Nav.Link>
+            <Link className="nav-link" to={"/account"}>
+              <img src={user} alt="user" />
+            </Link>
+            <Link className="nav-link" to={"/login"} onClick={logoutHandler}>
+              <img src={exit} alt="exit" />
+            </Link>
           </Nav>
         </Container>
       </Navbar>

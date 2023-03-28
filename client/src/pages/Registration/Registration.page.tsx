@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import FormHeader from "../../components/FormHeader/FormHeader";
-import classes from "./Registration.page.module.scss";
 import axios, { AxiosError } from "axios";
-import useAppDispatch from "../../hooks/useAppDispatch.hook";
-import { setToken } from "../../store/slices/token.slice";
+
+import FormHeader from "../../components/FormHeader/FormHeader";
+import { AuthContext } from "../../context/auth.context";
+
+import classes from "./Registration.page.module.scss";
+import { url } from "../../main";
 
 interface Form {
   email: string,
@@ -19,11 +21,9 @@ const initialForm: Form = {
   password: ""
 };
 
-const baseURL: string = "http://localhost:5000";
-
 const RegistrationPage: React.FC = (): JSX.Element => {
   const [form, setForm] = useState<Form>(initialForm);
-  const dispatch = useAppDispatch();
+  const auth = useContext(AuthContext);
 
   const changeHandler: React.ChangeEventHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm(prevState => {
@@ -36,12 +36,10 @@ const RegistrationPage: React.FC = (): JSX.Element => {
       return alert("Ведіть дані у форму");
     }
     try {
-      const response = await axios.post(`${baseURL}/auth/registration`, form);
-      // dispatch(setToken(response.data.token));
+      await axios.post(`${url}/auth/registration`, form);
       alert("Користувач стоврений");
     } catch (e: AxiosError | any) {
       const { data } = e.response;
-      console.log(data);
       alert(data.message);
     }
   };

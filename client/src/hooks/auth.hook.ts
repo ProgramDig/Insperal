@@ -17,7 +17,6 @@ export const useAuth = () => {
   },[]);
 
   const logout = useCallback(() => {
-    console.log("logout");
     dispatch(removeToken());
     dispatch(removeRole());
     localStorage.removeItem(LOCALSTORAGE_NAME);

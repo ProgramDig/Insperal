@@ -1,10 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import FormHeader from "../../components/FormHeader/FormHeader";
 import axios, { AxiosError } from "axios";
-import classes from "../Registration/Registration.page.module.scss";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
+
 import { AuthContext } from "../../context/auth.context";
+import FormHeader from "../../components/FormHeader/FormHeader";
+
+import classes from "../Registration/Registration.page.module.scss";
+import { url } from "../../main";
 
 interface Form {
   inputValue: string,
@@ -16,11 +19,9 @@ const initialForm: Form = {
   password: ""
 };
 
-const baseURL: string = "http://localhost:5000";
-
 const LoginPage: React.FC = (): JSX.Element => {
-  const auth = useContext(AuthContext);
   const [form, setForm] = useState<Form>(initialForm);
+  const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
   const changeHandler: React.ChangeEventHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,9 +40,10 @@ const LoginPage: React.FC = (): JSX.Element => {
         login: form.inputValue.indexOf("@") !== -1 ? null : form.inputValue,
         password: form.password
       };
-      const response = await axios.post(`${baseURL}/auth/login`, data);
-      // @ts-ignore
-      auth.login(response.data.token, response.data.role)
+      const response = await axios.post(`${url}/auth/login`, data);
+      if (auth.login) {
+        auth.login(response.data.token, response.data.role);
+      }
       navigate("/home");
     } catch (e: AxiosError | any) {
       const { data } = e.response;
