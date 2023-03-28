@@ -1,12 +1,13 @@
 import NavBar from "./components/NavBar/NavBar";
 import "./App.css";
 import routesHook from "./hooks/routes.hook";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const routes = routesHook({});
   return (
     <div>
-      <NavBar/>
+      {/*<NavBar/>*/}
       {routes}
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import logo from "../../assets/box-fill.svg";
+import logo from "../../assets/box-fill-white.svg";
 import user from "../../assets/person-circle.svg";
 import exit from "../../assets/box-arrow-right.svg";
 import { Link } from "react-router-dom";
