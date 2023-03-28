@@ -25,7 +25,7 @@ export class UsersService {
     return users;
   }
 
-  async getUserByEmailOrLogin(login: string | undefined, email: string | undefined) {
+  async getUserByEmailOrLogin(login: string | null, email: string | null) {
     const user = await this.userRepository.findOne({
       where: {
         [Op.or]: [{ login: login ? login : null }, { email: email ? email : null }]

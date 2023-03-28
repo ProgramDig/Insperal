@@ -2,6 +2,7 @@ import { Body, Controller, Post } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateUserDto } from "../users/dto/create-user.dto";
 import { AuthService } from "./auth.service";
+import { IsRoleDto } from "./dto/IsRole.dto";
 
 @ApiTags("Авторизація")
 @Controller('auth')
@@ -22,5 +23,12 @@ export class AuthController {
   @Post("/registration")
   registration(@Body() userDto: CreateUserDto) {
     return this.authService.registration(userDto);
+  }
+
+  @ApiOperation({summary:"Перевірка на роль"})
+  @ApiResponse({status:200, type: Object})
+  @Post("/is-role")
+  isRole(@Body() dto: IsRoleDto) {
+    return this.authService.isRole(dto)
   }
 }

@@ -4,6 +4,7 @@ import { UsersService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
 import { User } from "../users/users.model";
+import { IsRoleDto } from "./dto/IsRole.dto";
 
 @Injectable()
 export class AuthService {
@@ -32,8 +33,19 @@ export class AuthService {
   async generateToken(user: User) {
     const payload = { email: user.email, login: user.login, id: user.id, roles: user.roles };
     return {
-      token: this.jwtService.sign(payload)
+      token: this.jwtService.sign(payload),
+      role: user.roles[0].value
     };
+  }
+
+  async isRole(dto: IsRoleDto) {
+    const user = this.jwtService.verify(dto.token);
+    const role = user.roles.filter((item) => item.value === dto.role);
+    if (role.length) {
+      console.log(role)
+      return { role: role[0].value };
+    }
+    throw new HttpException("Немає доступа", HttpStatus.NOT_FOUND);
   }
 
   private async validateUser(userDto: CreateUserDto) {

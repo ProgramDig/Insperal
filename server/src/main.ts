@@ -6,6 +6,8 @@ async function start() {
   const PORT = process.env.PORT || 5000;
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle("Програмний модуль обліку резерву військово-навчених ресурсів районного територіального центру комплектування та соціальної підтримки для жінок")
     .setDescription("Документація до серверної частини Rest full API додатку")
