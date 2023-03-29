@@ -13,6 +13,7 @@ import { url } from "./main";
 import useAppDispatch from "./hooks/useAppDispatch.hook";
 import { setItems } from "./store/slices/items.slice";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Footer from "./components/Footer/Footer";
 
 const App: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ const App: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     if (role === RoleEnum.ADMIN.toString()) {
-      const fetch = async ():Promise<void> => {
+      const fetch = async (): Promise<void> => {
         try {
           const response = await axios.get(`${url}/women-accounting`, {
             headers: {
@@ -34,7 +35,7 @@ const App: React.FC = (): JSX.Element => {
           });
           dispatch(setItems(response.data));
         } catch (error) {
-          alert(error)
+          alert(error);
         }
       };
       fetch().catch((e) => console.log(e));
@@ -45,6 +46,7 @@ const App: React.FC = (): JSX.Element => {
     <AuthContext.Provider value={{ login, logout }}>
       {!!role && <NavBar />}
       {routes}
+      {!!role && <Footer />}
     </AuthContext.Provider>
   );
 };

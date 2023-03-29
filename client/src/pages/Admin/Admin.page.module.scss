@@ -24,3 +24,18 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.dropdownBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tableRow {
+
+  &:hover {
+    transition: all .4s;
+    cursor: pointer;
+    background-color: #0C6EFD;
+  }
+}

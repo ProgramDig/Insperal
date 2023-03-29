@@ -7,7 +7,9 @@ import useAppSelector from "../../hooks/useAppSelector.hook";
 
 import cloud from "../../assets/cloud-arrow-down.svg"
 import searchIcon from "../../assets/search.svg";
+import plus from "../../assets/plus-circle.svg"
 import classes from "./Admin.page.module.scss";
+import SearchDropdown from "../../components/SearchDropdown/SearchDropdown";
 
 const AdminPage: React.FC = (): JSX.Element => {
   const data: WomenAccount[] = useAppSelector(state => state.items.list);
@@ -36,11 +38,16 @@ const AdminPage: React.FC = (): JSX.Element => {
             <span className={classes.btnSpan}>Оновити дані з сервера</span>
             <img src={cloud} alt="cloud" />
           </Button>
+          <Button className={classes.buttons} variant="primary">
+            <span className={classes.btnSpan}>Створити новий запис</span>
+            <img src={plus} alt="plus" />
+          </Button>
         </div>
 
-        <div>
-          <InputGroup className="mb-3">
+        <div className={classes.dropdownBlock}>
+          <SearchDropdown/>
 
+          <InputGroup className="mb-3">
             <Form.Control
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
@@ -74,7 +81,7 @@ const AdminPage: React.FC = (): JSX.Element => {
           <tbody>
           {data?.map(item => {
             return (
-              <tr onClick={showModalHandler} id={item.id.toString()}>
+              <tr className={classes.tableRow} onClick={showModalHandler} id={item.id.toString()}>
                 <th scope={"row"}>{item.id}</th>
                 <td className={""}>{item.indexСard}</td>
                 <td className={""}>{item.team}</td>
