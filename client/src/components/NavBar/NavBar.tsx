@@ -9,6 +9,7 @@ import { AuthContext } from "../../context/auth.context";
 import { RoleEnum } from "../../enums/role.enum";
 import useAppSelector from "../../hooks/useAppSelector.hook";
 import classes from "./NavBar.module.scss";
+import { url } from "../../main";
 
 const NavBar: React.FC = (): JSX.Element => {
   const auth = useContext(AuthContext);
@@ -38,7 +39,7 @@ const NavBar: React.FC = (): JSX.Element => {
               <Link className="nav-link" to={"/admin"}>Адмін панель</Link>
             }
             <Link className="nav-link" to={"/api"}>Апі</Link>
-            <Link className="nav-link" to={"/docs"}>Документація</Link>
+            <a className="nav-link" href={`${url}/api/docs`}>Документація</a>
           </Nav>
           <Nav>
             <Link className="nav-link" to={"/account"}>
