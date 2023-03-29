@@ -6,11 +6,11 @@ import routesHook from "./hooks/routes.hook";
 import useAppSelector from "./hooks/useAppSelector.hook";
 import { useAuth } from "./hooks/auth.hook";
 
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./components/Footer/Footer";
 import { loadItemsHook } from "./hooks/loadItems.hook";
 import { WomenAccount } from "./interfaces/WomenAccount";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 const App: React.FC = (): JSX.Element => {
   const role: string = useAppSelector(state => state.role.value);
@@ -19,11 +19,11 @@ const App: React.FC = (): JSX.Element => {
   const loadItems = loadItemsHook();
   const { login, logout } = useAuth();
 
-  useEffect(() => {
+  useEffect((): void => {
     loadItems.fetch();
   }, [role]);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (items.length < 1) {
       loadItems.fetch();
     }

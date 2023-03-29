@@ -34,7 +34,7 @@ const NavBar: React.FC = (): JSX.Element => {
             <Link className="nav-link" to={"/home"}>
               Головна
             </Link>
-            <Link className="nav-link" to={"/table"}>Таблиця</Link>
+            <Link className="nav-link" to={"/table"}>Перелік</Link>
             {role === RoleEnum.ADMIN &&
               <Link className="nav-link" to={"/admin"}>Адмін панель</Link>
             }

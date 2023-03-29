@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 
 import ModalItem from "../../components/ModalItem/ModalItem";
-import { WomenAccount } from "../../interfaces/WomenAccount";
-import useAppSelector from "../../hooks/useAppSelector.hook";
 
 import cloud from "../../assets/cloud-arrow-down.svg";
 import searchIcon from "../../assets/search.svg";
@@ -15,7 +13,6 @@ import CreateModal from "../../components/CreateModal/CreateModal";
 import TableItem from "../../components/TableItem/TableItem";
 
 const AdminPage: React.FC = (): JSX.Element => {
-  const data: WomenAccount[] = useAppSelector(state => state.items.list);
   const loadItems = loadItemsHook();
 
   const [modalId, setModalId] = useState<number>(1);

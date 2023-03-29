@@ -2,9 +2,7 @@ import React from "react";
 import classes from "./MyChart.module.scss";
 import { CartesianGrid, Line, XAxis, YAxis, LineChart } from "recharts";
 
-
-const MyChart = () => {
-  const date = new Date().getUTCFullYear();
+const MyChart: React.FC = (): JSX.Element => {
   const data = [
     {name: '2-03-2023', uv: 1, pv: 2, amt: 15},
     {name: '3-03-2023', uv: 2, pv: 6, amt: 15},
@@ -14,7 +12,7 @@ const MyChart = () => {
     {name: '21-04-2023', uv: 7, pv: 9, amt: 15},
     {name: '2-04-2023', uv: 2, pv: 12, amt: 15},
     {name: `9-04-2023`, uv: 1, pv: 4, amt: 15},
-    {name: `${new Date().getUTCDate()}-${new Date().getUTCMonth()}-${new Date().getUTCFullYear()}`, uv: 1, pv: 1, amt: 15},
+    {name: `${new Date().getUTCDate()}-0${new Date().getUTCMonth()}-${new Date().getUTCFullYear()}`, uv: 1, pv: 1, amt: 15},
   ]
 
   return (
