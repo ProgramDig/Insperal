@@ -1,40 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { SexEnum } from "../../enums/sex.enum";
-import { IndexCardEnum } from "../../enums/index-card.enum";
-import { RankEnum } from "../../enums/rank.enum";
-import { LocalityEnum } from "../../enums/locality.enum";
-import { VlkResultEnum } from "../../enums/vlk-result.enum";
-import axios from "axios";
-import { url } from "../../main";
+import React, { useState } from "react";
+
 import useAppSelector from "../../hooks/useAppSelector.hook";
-import classes from "./Admin.page.module.scss";
 import { Button } from "react-bootstrap";
 import trash from "../../assets/trash-fill.svg";
 import ModalItem from "../../components/ModalItem/ModalItem";
+import { WomenAccount } from "../../interfaces/WomenAccount";
+import classes from "./Admin.page.module.scss";
 
-interface WomenAccount {
-  id: number;
-  firstName: string;
-  secondName: string;
-  thirdName: string;
-  dateOfBirth: Date;
-  sex: SexEnum;
-  indexСard: IndexCardEnum;
-  rank: RankEnum;
-  team: number;
-  vos: number;
-  code: number;
-  accountGroup: string;
-  locality: LocalityEnum;
-  fullAddress: string;
-  phone: string;
-  workplace: string;
-  vlkResult: VlkResultEnum;
-  vlkDate: Date;
-  description: string;
-}
-
-const AdminPage = () => {
+const AdminPage: React.FC = (): JSX.Element => {
   const data: WomenAccount[] = useAppSelector(state => state.items.list);
 
   const [modalId, setModalId] = useState<number>(1);
