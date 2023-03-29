@@ -26,7 +26,7 @@ const NavBar: React.FC = (): JSX.Element => {
         <Container>
           <Navbar.Brand>
             <Link className="nav-link" to={"/home"}>
-              Insperal <img src={logo} alt="logo" />
+              Insperal <img className={classes.logo} src={logo} alt="logo" />
             </Link>
           </Navbar.Brand>
           <Nav className="me-auto">

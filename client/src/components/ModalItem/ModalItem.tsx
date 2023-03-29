@@ -2,6 +2,9 @@ import React, { MouseEventHandler } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { WomenAccount } from "../../interfaces/WomenAccount";
 import useAppSelector from "../../hooks/useAppSelector.hook";
+import trash from "../../assets/trash-fill.svg";
+import x from "../../assets/x-lg.svg"
+import pen from "../../assets/pen.svg"
 import classes from "./ModalItem.module.scss";
 
 interface ModalItemProps {
@@ -11,7 +14,6 @@ interface ModalItemProps {
 }
 
 const ModalItem: React.FC<ModalItemProps> = ({ id, show, onHide }): JSX.Element => {
-
   const item: WomenAccount = useAppSelector(state => state.items.list).filter(wa => wa.id === id)[0];
 
   return (
@@ -62,8 +64,9 @@ const ModalItem: React.FC<ModalItemProps> = ({ id, show, onHide }): JSX.Element 
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button className={"btn-warning"}>Редагувати</Button>
-        <Button onClick={onHide}>Закрити</Button>
+        <Button className="btn-danger action">Видалити <img src={trash} alt="trash" /></Button>
+        <Button className={"btn-success"}>Редагувати <img src={pen} alt="pen" /></Button>
+        <Button onClick={onHide}>Закрити вікно <img src={x} alt="x" /></Button>
       </Modal.Footer>
     </Modal>
   );

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Button, Form, InputGroup } from "react-bootstrap";
 
-import useAppSelector from "../../hooks/useAppSelector.hook";
-import { Button } from "react-bootstrap";
-import trash from "../../assets/trash-fill.svg";
 import ModalItem from "../../components/ModalItem/ModalItem";
 import { WomenAccount } from "../../interfaces/WomenAccount";
+import useAppSelector from "../../hooks/useAppSelector.hook";
+
+import cloud from "../../assets/cloud-arrow-down.svg"
+import searchIcon from "../../assets/search.svg";
 import classes from "./Admin.page.module.scss";
 
 const AdminPage: React.FC = (): JSX.Element => {
@@ -28,11 +30,26 @@ const AdminPage: React.FC = (): JSX.Element => {
     <div className="container">
       <h1 className={"d-flex justify-content-center m-3"}>Панель адміністратора</h1>
 
-      <div>
-        <Button className={classes.buttons} variant="primary">Оновити</Button>
-        <Button className={classes.buttons} variant="primary">Додати</Button>
-        <Button className={classes.buttons} variant="primary">Редагувати</Button>
-        <Button className={classes.buttons} variant="primary">Видалити</Button>
+      <div className={classes.searchBlock}>
+        <div>
+          <Button className={classes.buttons} variant="primary">
+            <span className={classes.btnSpan}>Оновити дані з сервера</span>
+            <img src={cloud} alt="cloud" />
+          </Button>
+        </div>
+
+        <div>
+          <InputGroup className="mb-3">
+
+            <Form.Control
+              aria-label="Default"
+              aria-describedby="inputGroup-sizing-default"
+            />
+            <InputGroup.Text id="inputGroup-sizing-default">
+              <img src={searchIcon} alt="searchIcon" />
+            </InputGroup.Text>
+          </InputGroup>
+        </div>
       </div>
 
       <div className={classes.wrap}>
@@ -52,7 +69,6 @@ const AdminPage: React.FC = (): JSX.Element => {
             <th scope="col">Група обліку</th>
             <th scope="col">Результат ВЛК</th>
             <th scope="col">Населений пункт</th>
-            <th scope="col">Дії</th>
           </tr>
           </thead>
           <tbody>
@@ -72,11 +88,6 @@ const AdminPage: React.FC = (): JSX.Element => {
                 <td className={""}>{item.accountGroup}</td>
                 <td className={""}>{item.vlkResult}</td>
                 <td className={""}>{item.locality}</td>
-                <td className={"action"}>
-                  <Button className="btn-danger action">
-                    <img src={trash} alt="trash" />
-                  </Button>
-                </td>
               </tr>
             );
           })}
