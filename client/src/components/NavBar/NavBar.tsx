@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import logo from "../../assets/box-fill-white.svg";
-import user from "../../assets/person-circle.svg";
+// import user from "../../assets/person-circle.svg";
 import exit from "../../assets/box-arrow-right.svg";
 import { Link } from "react-router-dom";
 
@@ -22,7 +22,7 @@ const NavBar: React.FC = (): JSX.Element => {
   };
 
   return (
-    <>
+    <header>
       <Navbar bg="primary" variant="dark" className={classes.block}>
         <Container>
           <Navbar.Brand>
@@ -38,20 +38,21 @@ const NavBar: React.FC = (): JSX.Element => {
             {role === RoleEnum.ADMIN &&
               <Link className="nav-link" to={"/admin"}>Адмін панель</Link>
             }
-            <Link className="nav-link" to={"/api"}>Апі</Link>
-            <a className="nav-link" href={`${url}/api/docs`}>Документація</a>
+            <Link className="nav-link" target="_blank" to={`${url}/women-accounting`}>Апі</Link>
+            <a className="nav-link" target="_blank" href={`${url}/api/docs`}>Документація</a>
           </Nav>
           <Nav>
-            <Link className="nav-link" to={"/account"}>
-              <img src={user} alt="user" />
-            </Link>
+            {/*<Link className="nav-link" to={"/account"}>*/}
+            {/*  <img src={user} alt="user" />*/}
+            {/*</Link>*/}
             <Link className="nav-link" to={"/login"} onClick={logoutHandler}>
+              <span className={classes.exit}>Вихід</span>
               <img src={exit} alt="exit" />
             </Link>
           </Nav>
         </Container>
       </Navbar>
-    </>
+    </header>
   );
 };
 

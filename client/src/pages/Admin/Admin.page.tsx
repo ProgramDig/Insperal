@@ -5,27 +5,45 @@ import ModalItem from "../../components/ModalItem/ModalItem";
 import { WomenAccount } from "../../interfaces/WomenAccount";
 import useAppSelector from "../../hooks/useAppSelector.hook";
 
-import cloud from "../../assets/cloud-arrow-down.svg"
+import cloud from "../../assets/cloud-arrow-down.svg";
 import searchIcon from "../../assets/search.svg";
-import plus from "../../assets/plus-circle.svg"
+import plus from "../../assets/plus-circle.svg";
 import classes from "./Admin.page.module.scss";
 import SearchDropdown from "../../components/SearchDropdown/SearchDropdown";
+import { loadItemsHook } from "../../hooks/loadItems.hook";
+import CreateModal from "../../components/CreateModal/CreateModal";
+import TableItem from "../../components/TableItem/TableItem";
 
 const AdminPage: React.FC = (): JSX.Element => {
   const data: WomenAccount[] = useAppSelector(state => state.items.list);
+  const loadItems = loadItemsHook();
 
   const [modalId, setModalId] = useState<number>(1);
-  const [modalShow, setModalShow] = useState<boolean>(false);
 
-  const showModalHandler: React.MouseEventHandler = (event: React.MouseEvent<HTMLTableRowElement>): void => {
+  const [modalInfoShow, setModalInfoShow] = useState<boolean>(false);
+  const [modalCreateShow, setModalCreateShow] = useState<boolean>(false);
+
+  const showModalCreateHandler: React.MouseEventHandler = (event: React.MouseEvent<HTMLTableRowElement>): void => {
+    setModalCreateShow(true);
+  };
+
+  const onHideCreateHandler: React.MouseEventHandler = (): void => {
+    setModalCreateShow(false);
+  };
+
+  const showModalInfoHandler: React.MouseEventHandler = (event: React.MouseEvent<HTMLTableRowElement>): void => {
     if (!(event.target as HTMLElement).classList.contains("action")) {
-      setModalShow(true);
+      setModalInfoShow(true);
       setModalId(Number(event.currentTarget.id));
     }
   };
 
-  const onHideHandler: React.MouseEventHandler = (): void => {
-    setModalShow(false);
+  const onHideInfoHandler: React.MouseEventHandler = (): void => {
+    setModalInfoShow(false);
+  };
+
+  const loadHandler: React.MouseEventHandler = () => {
+    loadItems.fetch();
   };
 
   return (
@@ -34,18 +52,28 @@ const AdminPage: React.FC = (): JSX.Element => {
 
       <div className={classes.searchBlock}>
         <div>
-          <Button className={classes.buttons} variant="primary">
+          <Button
+            className={classes.buttons}
+            onClick={loadHandler}
+            variant="primary"
+            disabled={loadItems.loading}
+          >
             <span className={classes.btnSpan}>Оновити дані з сервера</span>
             <img src={cloud} alt="cloud" />
           </Button>
-          <Button className={classes.buttons} variant="primary">
+          <Button
+            className={classes.buttons}
+            variant="primary"
+            disabled={loadItems.loading}
+            onClick={showModalCreateHandler}
+          >
             <span className={classes.btnSpan}>Створити новий запис</span>
             <img src={plus} alt="plus" />
           </Button>
         </div>
 
         <div className={classes.dropdownBlock}>
-          <SearchDropdown/>
+          <SearchDropdown />
 
           <InputGroup className="mb-3">
             <Form.Control
@@ -59,51 +87,10 @@ const AdminPage: React.FC = (): JSX.Element => {
         </div>
       </div>
 
-      <div className={classes.wrap}>
-        <table className={`table ${classes.table}`}>
-          <thead>
-          <tr>
-            <th scope="col">Ід</th>
-            <th scope="col">Картотека</th>
-            <th scope="col">Команда</th>
-            <th scope="col">Звання</th>
-            <th scope="col">Прізвище</th>
-            <th scope="col">Ім'я</th>
-            <th scope="col">По батькові</th>
-            <th scope="col">Дата народження</th>
-            <th scope="col">ВОС</th>
-            <th scope="col">КОД</th>
-            <th scope="col">Група обліку</th>
-            <th scope="col">Результат ВЛК</th>
-            <th scope="col">Населений пункт</th>
-          </tr>
-          </thead>
-          <tbody>
-          {data?.map(item => {
-            return (
-              <tr className={classes.tableRow} onClick={showModalHandler} id={item.id.toString()}>
-                <th scope={"row"}>{item.id}</th>
-                <td className={""}>{item.indexСard}</td>
-                <td className={""}>{item.team}</td>
-                <td className={""}>{item.rank}</td>
-                <td className={""}>{item.secondName}</td>
-                <td className={""}>{item.firstName}</td>
-                <td className={""}>{item.thirdName}</td>
-                <td className={""}>{item.dateOfBirth.toString().split("T")[0]}</td>
-                <td className={""}>{item.vos}</td>
-                <td>{item.code}</td>
-                <td className={""}>{item.accountGroup}</td>
-                <td className={""}>{item.vlkResult}</td>
-                <td className={""}>{item.locality}</td>
-              </tr>
-            );
-          })}
-          </tbody>
-        </table>
-      </div>
+      <TableItem showModalInfoHandler={showModalInfoHandler}/>
 
-      <ModalItem id={modalId} show={modalShow} onHide={onHideHandler} />
-
+      <ModalItem id={modalId} show={modalInfoShow} onHide={onHideInfoHandler} />
+      <CreateModal show={modalCreateShow} onHide={onHideCreateHandler}/>
     </div>
   );
 };

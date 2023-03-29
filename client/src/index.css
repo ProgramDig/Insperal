@@ -1,0 +1,14 @@
+html,
+body {
+    height: 100%;
+}
+#wrap {
+    min-height: 100% !important;
+}
+main {
+    padding-bottom: 00px;
+}
+footer {
+    margin-top: -200px;
+    height: 200px;
+}

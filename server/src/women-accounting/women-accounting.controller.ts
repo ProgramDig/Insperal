@@ -54,8 +54,8 @@ export class WomenAccountingController {
 
   @ApiOperation({ summary: "Отримання всіх записів особи обліку" })
   @ApiResponse({ status: 200, type: [WomenAccounting] })
-  @Roles(RoleEnum.ADMIN)
-  @UseGuards(RolesGuard)
+  // @Roles(RoleEnum.ADMIN)
+  // @UseGuards(RolesGuard)
   @Get("/")
   getAllEntities() {
     return this.womenAccountingService.getAll();

@@ -3,7 +3,8 @@
 }
 
 .foot {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  margin-top: -100px;
+  /*Минус Высота футера*/
+  height: 0px;
+  /*Высота футера*/
 }

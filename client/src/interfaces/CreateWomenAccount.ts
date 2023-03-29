@@ -4,8 +4,7 @@ import { RankEnum } from "../enums/rank.enum";
 import { LocalityEnum } from "../enums/locality.enum";
 import { VlkResultEnum } from "../enums/vlk-result.enum";
 
-export interface WomenAccount {
-  id: number;
+export interface CreateWomenAccount {
   firstName: string;
   secondName: string;
   thirdName: string;
@@ -13,9 +12,9 @@ export interface WomenAccount {
   sex: SexEnum;
   indexСard: IndexCardEnum;
   rank: RankEnum;
-  team: number;
-  vos: number;
-  code: number;
+  team: string;
+  vos: string;
+  code: string;
   accountGroup: string;
   locality: LocalityEnum;
   fullAddress: string;

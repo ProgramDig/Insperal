@@ -18,6 +18,11 @@ const itemsSlice = createSlice({
     setItems(state, action) {
       state.list = [...action.payload];
     },
+    setItem(state, action) {
+      console.log(state)
+      console.log(action)
+      // state.list.push(action.payload.data);
+    },
     removeItems(state) {
       state.list = initialState.list;
     },
@@ -42,5 +47,5 @@ const itemsSlice = createSlice({
   }
 });
 
-export const { removeItem, removeItems, updateItem, setItems, removeFilterList, setFilterList } = itemsSlice.actions;
+export const { removeItem, removeItems, updateItem, setItems, removeFilterList, setFilterList, setItem} = itemsSlice.actions;
 export default itemsSlice.reducer;

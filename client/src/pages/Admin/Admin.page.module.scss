@@ -34,8 +34,12 @@
 .tableRow {
 
   &:hover {
+    transform: scale(1.01);
     transition: all .4s;
     cursor: pointer;
+    background-color: #EAECEF;
+  }
+  &:active {
     background-color: #0C6EFD;
   }
 }
