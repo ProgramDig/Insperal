@@ -27,15 +27,15 @@ const itemsSlice = createSlice({
       state.list = initialState.list;
     },
     updateItem(state, action) {
-      state.list.reduce((acc: any, item: any) => {
-        if (item._id === action.payload._id) {
+      state.list.reduce((acc: WomenAccount[], item: WomenAccount) => {
+        if (item.id === action.payload) {
           return [...acc, { ...item }];
         }
         return [...acc, item];
       }, []);
     },
     removeItem(state, action) {
-      state.list.filter((item: any) => item._id !== action.payload._id);
+      state.list.filter((item: WomenAccount) => item.id !== action.payload.id);
     },
     setFilterList(state, action) {
       state.filterList = [...action.payload];

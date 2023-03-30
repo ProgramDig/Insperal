@@ -3,21 +3,47 @@ import { Button, Modal } from "react-bootstrap";
 import { WomenAccount } from "../../interfaces/WomenAccount";
 import useAppSelector from "../../hooks/useAppSelector.hook";
 import trash from "../../assets/trash-fill.svg";
-import x from "../../assets/x-lg.svg"
-import pen from "../../assets/pen.svg"
+import x from "../../assets/x-lg.svg";
+import pen from "../../assets/pen.svg";
 import classes from "./ModalItem.module.scss";
+import useAppDispatch from "../../hooks/useAppDispatch.hook";
+import { removeItem } from "../../store/slices/items.slice";
+import axios from "axios";
+import { url } from "../../main";
+import { loadItemsHook } from "../../hooks/loadItems.hook";
 
 interface ModalItemProps {
   id: number,
   show: boolean,
-  onHide: MouseEventHandler
+  onHide: MouseEventHandler,
+  showModalUpdateHandler: MouseEventHandler
 }
 
-const ModalItem: React.FC<ModalItemProps> = ({ id, show, onHide }): JSX.Element => {
+const ModalItem: React.FC<ModalItemProps> = ({ id, show, onHide,showModalUpdateHandler }): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const load = loadItemsHook();
   const item: WomenAccount = useAppSelector(state => state.items.list).filter(wa => wa.id === id)[0];
+  const token: string = useAppSelector(state => state.token.value);
+  const deleteHandler: React.MouseEventHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      const id: string = (event.target as HTMLInputElement).value;
+      const response = await axios.post(`${url}/women-accounting/delete`, { id }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      onHide(event);
+      alert(response.data.message);
+      dispatch(removeItem({ id }));
+      load.fetch();
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   return (
-    <Modal show={show} onHide={(onHide as () => void)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+    <Modal show={show} onHide={(onHide as () => void)} size="lg" aria-labelledby="contained-modal-title-vcenter"
+           centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Інформація про облікову особу {item?.secondName} {item?.firstName} {item?.thirdName}
@@ -64,8 +90,9 @@ const ModalItem: React.FC<ModalItemProps> = ({ id, show, onHide }): JSX.Element 
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button className="btn-danger action">Видалити <img src={trash} alt="trash" /></Button>
-        <Button className={"btn-success"}>Редагувати <img src={pen} alt="pen" /></Button>
+        <Button className="btn-danger action" value={item?.id} onClick={deleteHandler}>Видалити <img src={trash}
+                                                                                                     alt="trash" /></Button>
+        <Button className={"btn-success"} onClick={showModalUpdateHandler}>Редагувати <img src={pen} alt="pen" /></Button>
         <Button onClick={onHide}>Закрити вікно <img src={x} alt="x" /></Button>
       </Modal.Footer>
     </Modal>

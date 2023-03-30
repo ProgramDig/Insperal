@@ -20,8 +20,8 @@ export class WomenAccountingService {
   }
 
   async update(dto: UpdateWADto) {
-    const woman = await this.womenAccountRepository.findByPk(dto.id);
-    if (woman) {
+    const woman = await this.womenAccountRepository.findByPk(dto.id );
+    if (!woman) {
       throw new HttpException("Такого запису не існує", HttpStatus.BAD_REQUEST);
     }
     await woman.update(dto);

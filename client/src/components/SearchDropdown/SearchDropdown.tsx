@@ -1,21 +1,22 @@
 import React from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
-import classes from "./SearchDropdown.module.scss"
+import { Form } from "react-bootstrap";
 
-const SearchDropdown: React.FC = (): JSX.Element => {
+interface SearchDropdownProps {
+  select: string,
+  selectOnChangeHandle: React.ChangeEventHandler
+}
+
+const SearchDropdown: React.FC<SearchDropdownProps> = ({ select, selectOnChangeHandle }): JSX.Element => {
   return (
-    <DropdownButton id="dropdown-basic-button" title="Параметр пошуку" className={`mb-3 ${classes.dropdown}`}>
-      <Dropdown.Item href="#/action-1">Ід</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">Картотека</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">Звання</Dropdown.Item>
-      <Dropdown.Item href="#/action-1">Прізвище</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">По-Батькові</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">ВОС</Dropdown.Item>
-      <Dropdown.Item href="#/action-1">КОД</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">Група обліку</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">Результат ВЛК</Dropdown.Item>
-      <Dropdown.Item href="#/action-1">Населений пункт</Dropdown.Item>
-    </DropdownButton>
+    <Form.Select value={select} onChange={selectOnChangeHandle} aria-label="Default select example">
+      <option>Параметр пошуку</option>
+      <option value="id">Ід</option>
+      <option value="indexСard">Картотека</option>
+      <option value="rank">Звання</option>
+      <option value="secondName" selected>Прізвище</option>
+      <option value="thirdName">По-Батькові</option>
+      <option value="locality">Населений пункт</option>
+    </Form.Select>
   );
 };
 

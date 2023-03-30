@@ -38,7 +38,7 @@ export class WomenAccountingController {
   @ApiResponse({ status: 200, type: DeleteWADto })
   @Roles(RoleEnum.ADMIN)
   @UseGuards(RolesGuard)
-  @Delete("/delete")
+  @Post("/delete")
   deleteEntity(@Body() dto: DeleteWADto) {
     return this.womenAccountingService.delete(dto);
   }

@@ -1,7 +1,7 @@
 import { RoleEnum } from "../enums/role.enum";
 import axios from "axios";
 import { url } from "../main";
-import { setItems } from "../store/slices/items.slice";
+import { setFilterList, setItems } from "../store/slices/items.slice";
 import useAppSelector from "./useAppSelector.hook";
 import useAppDispatch from "./useAppDispatch.hook";
 import { useCallback, useState } from "react";
@@ -30,6 +30,7 @@ export const loadItemsHook: Function = (): LoadItemsHook => {
         });
         setLoading(false);
         dispatch(setItems(response.data));
+        dispatch(setFilterList(response.data));
       }
     } catch (error) {
       setLoading(false);

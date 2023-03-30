@@ -8,7 +8,7 @@ interface TableItemProps {
 }
 
 const TableItem: React.FC<TableItemProps> = ({ showModalInfoHandler }): JSX.Element => {
-  const data: WomenAccount[] = useAppSelector(state => state.items.list);
+  const data: WomenAccount[] = useAppSelector(state => state.items.filterList);
   return (
     <div className={classes.wrap}>
       <table className={`table ${classes.table}`}>
@@ -30,28 +30,95 @@ const TableItem: React.FC<TableItemProps> = ({ showModalInfoHandler }): JSX.Elem
         </tr>
         </thead>
         <tbody>
-        {data?.map(item => {
-          return (
-            <tr key={item.id} className={classes.tableRow} onClick={showModalInfoHandler} id={item.id.toString()}>
-              <th scope={"row"}>{item.id}</th>
-              <td className={""}>{item.indexСard}</td>
-              <td className={""}>{item.team}</td>
-              <td className={""}>{item.rank}</td>
-              <td className={""}>{item.secondName}</td>
-              <td className={""}>{item.firstName}</td>
-              <td className={""}>{item.thirdName}</td>
-              <td className={""}>{item.dateOfBirth.toString().includes("T") ?
-                item.dateOfBirth.toString().split("T")[0] :
-                item.dateOfBirth.toString()
-              }</td>
-              <td className={""}>{item.vos}</td>
-              <td>{item.code}</td>
-              <td className={""}>{item.accountGroup}</td>
-              <td className={""}>{item.vlkResult}</td>
-              <td className={""}>{item.locality}</td>
-            </tr>
-          );
-        })}
+        {data.length !== 0 ? data.map(item => {
+            return (
+              <tr key={item.id} className={classes.tableRow} onClick={showModalInfoHandler} id={item.id.toString()}>
+                <th scope={"row"}>{item.id}</th>
+                <td className={""}>{item.indexСard}</td>
+                <td className={""}>{item.team}</td>
+                <td className={""}>{item.rank}</td>
+                <td className={""}>{item.secondName}</td>
+                <td className={""}>{item.firstName}</td>
+                <td className={""}>{item.thirdName}</td>
+                <td className={""}>{item.dateOfBirth.toString().includes("T") ?
+                  item.dateOfBirth.toString().split("T")[0] :
+                  item.dateOfBirth.toString()
+                }</td>
+                <td className={""}>{item.vos}</td>
+                <td>{item.code}</td>
+                <td className={""}>{item.accountGroup}</td>
+                <td className={""}>{item.vlkResult}</td>
+                <td className={""}>{item.locality}</td>
+              </tr>
+            );
+          }) :
+          (
+            <>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  #
+                </td>
+              </tr>
+            </>
+
+          )
+
+        }
         </tbody>
       </table>
     </div>

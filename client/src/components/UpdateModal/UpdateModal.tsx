@@ -1,43 +1,65 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import x from "../../assets/x-lg.svg";
+import { SexEnum } from "../../enums/sex.enum";
 import { IndexCardEnum } from "../../enums/index-card.enum";
 import { RankEnum } from "../../enums/rank.enum";
-import { SexEnum } from "../../enums/sex.enum";
-import { VlkResultEnum } from "../../enums/vlk-result.enum";
 import { LocalityEnum } from "../../enums/locality.enum";
+import { VlkResultEnum } from "../../enums/vlk-result.enum";
+import x from "../../assets/x-lg.svg";
 import { CreateWomenAccount } from "../../interfaces/CreateWomenAccount";
 import { CreateHook } from "../../hooks/create.hook";
 import { loadItemsHook } from "../../hooks/loadItems.hook";
+import { UpdateWomenAccount } from "../../interfaces/UpdateWomenAccount";
+import { WomenAccount } from "../../interfaces/WomenAccount";
+import useAppSelector from "../../hooks/useAppSelector.hook";
+import { UpdateHook } from "../../hooks/update.hook";
 
-interface CreateModalProps {
+interface UpdateModalProps {
   show: boolean,
-  onHide: MouseEventHandler
+  onHide: MouseEventHandler,
+  id: number
 }
 
-const CreateModal: React.FC<CreateModalProps> = ({ show, onHide }): JSX.Element => {
-  const initialItem: CreateWomenAccount = {
-    firstName: "",
-    secondName: "",
-    thirdName: "",
-    indexСard: IndexCardEnum.NGU,
-    team: "",
-    rank: RankEnum.colonel,
-    sex: SexEnum.women,
-    workplace: "",
-    vos: "",
-    dateOfBirth: new Date(""),
-    code: "",
-    accountGroup: "",
-    fullAddress: "",
-    vlkDate: new Date(""),
-    locality: LocalityEnum.Kyiv,
-    vlkResult: VlkResultEnum.true,
-    description: "",
-    phone: ""
-  };
-  const [item, setItem] = useState<CreateWomenAccount>(initialItem);
-  const createHook = CreateHook();
+const UpdateModal: React.FC<UpdateModalProps> = ({ show, onHide, id }): JSX.Element => {
+  const items: WomenAccount[] = useAppSelector(state => state.items.list);
+
+  const initialItem: UpdateWomenAccount = {
+      id: 0,
+      firstName: "",
+      secondName: "",
+      thirdName: "",
+      indexСard: IndexCardEnum.NGU,
+      team: 0,
+      rank: RankEnum.colonel,
+      sex: SexEnum.women,
+      workplace: "",
+      vos: 0,
+      dateOfBirth: new Date(""),
+      code: 0,
+      accountGroup: "",
+      fullAddress: "",
+      vlkDate: new Date(""),
+      locality: LocalityEnum.Kyiv,
+      vlkResult: VlkResultEnum.true,
+      description: "",
+      phone: ""
+    };
+
+  const [item, setItem] = useState<UpdateWomenAccount>(initialItem);
+
+  useEffect((): void => {
+    if (id !== 1) {
+      setItem({
+        ...items.filter((item: WomenAccount) => item.id === id)[0],
+        // @ts-ignore
+        dateOfBirth: item.dateOfBirth.toString().split("T")[0],
+        // @ts-ignore
+        vlkDate: item.vlkDate.toString().split("T")[0]
+      });
+    }
+  }, [show]);
+
+  const updateHook = UpdateHook();
   const load = loadItemsHook();
 
   const changeHandler: React.ChangeEventHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +68,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ show, onHide }): JSX.Element 
     });
   };
 
-  const createHandler: React.MouseEventHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const updateHandler: React.MouseEventHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     for (let prop in item) {
       if (Object.prototype.hasOwnProperty.call(item, prop)) {
         const value = item[prop as keyof CreateWomenAccount];
@@ -55,7 +77,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ show, onHide }): JSX.Element 
         }
       }
     }
-    createHook.create(item);
+    updateHook.update(item);
     onHide(event);
     load.fetch();
   };
@@ -297,11 +319,11 @@ const CreateModal: React.FC<CreateModalProps> = ({ show, onHide }): JSX.Element 
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button className={"btn-success"} onClick={createHandler}>Створити</Button>
+        <Button className={"btn-success"} onClick={updateHandler}>Оновити</Button>
         <Button className="btn-danger action" onClick={onHide}>Відміна <img src={x} alt="x" /></Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default CreateModal;
+export default UpdateModal;
